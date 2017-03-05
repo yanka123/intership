@@ -3,7 +3,6 @@ package com.yanka.intership.dao;
 import com.yanka.intership.model.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.transaction.Transactional;
@@ -24,7 +23,7 @@ public class UserDaoTest {
 
     @Test
     public void testGetUsers() throws Exception {
-        List<User> users = userDao.getUsers();
+        List<User> users = userDao.getUsers(null);
         assertTrue(users.size() > 0);
     }
 
@@ -32,11 +31,11 @@ public class UserDaoTest {
     public void testDeleteUserById() throws Exception {
         int indexToRemove = 0;
 
-        List<User> users = userDao.getUsers();
+        List<User> users = userDao.getUsers(null);
         assertTrue(users.size() > indexToRemove);
 
         userDao.deleteUserById(users.get(indexToRemove).getId());
-        List<User> usersAfterDelete = userDao.getUsers();
+        List<User> usersAfterDelete = userDao.getUsers(null);
 
         assertEquals(users.size(), usersAfterDelete.size() + 1);
         for (int i = 0; i < usersAfterDelete.size(); i++) {

@@ -15,8 +15,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> getUsers(){
-        return userService.getUsers();
+    public List<User> getUsers(User user){
+        return userService.getUsers(user);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

@@ -1,9 +1,11 @@
 package com.yanka.intership.dao;
 
 import com.yanka.intership.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,16 +14,30 @@ import java.util.List;
 @Repository
 public class UserDao {
 
-    public List<User> getUsers() {
+    public List<User> getUsers(User user) {
         Session session = null;
         Transaction tx = null;
         try {
             session = HibernateConnector.getInstance().getSession();
             tx = session.beginTransaction();
-            Query query = session.createQuery("from User");
-//            Query query = session.createSQLQuery("select * from User");
 
-            List queryList = query.list();
+            Criteria criteria = session.createCriteria(User.class, "u");
+            if (user != null) {
+                if (user.getName() != null) {
+                    criteria.add(Restrictions.ilike("u.name", "%" + user.getName() + "%"));
+                }
+                if (user.getAge() != null) {
+                    criteria.add(Restrictions.eq("u.age", user.getAge()));
+                }
+                if (user.getIsAdmin() != null) {
+                    criteria.add(Restrictions.eq("u.isAdmin", user.getIsAdmin()));
+                }
+                if (user.getCreatedDate() != null) {
+                    criteria.add(Restrictions.ge("u.createdDate", user.getCreatedDate()));
+                }
+            }
+
+            List queryList = criteria.list();
             tx.commit();
             if (queryList == null || queryList.isEmpty()) {
                 return new ArrayList<>();
@@ -43,18 +59,6 @@ public class UserDao {
         Transaction tx = null;
         try {
             session = HibernateConnector.getInstance().getSession();
-
-//            method 1
-//            Query query = (Query) session.load("from User", id);
-
-//            method 2
-//            User user = session.get(User.class, id);
-//            session.delete(user);
-
-//            method 3
-//            Query query = session.createSQLQuery("select * from User");
-
-//            method 4
             tx = session.beginTransaction();
             tx.begin();
             Query query = session.createQuery("delete User where id = :id");

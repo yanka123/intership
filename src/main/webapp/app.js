@@ -30,6 +30,7 @@ app.controller('userController', function ($scope, $http, $location, $filter) {
     };
     $scope.goToList = function () {
         $scope.currentUser = {};
+        $scope.filterUser = $scope.filterUser || {};
         goToUrl('/');
         refresh();
     };
@@ -72,21 +73,24 @@ app.controller('userController', function ($scope, $http, $location, $filter) {
             $scope.goToList();
         });
     };
-    $scope.edit = function () {
-        var config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-        $http.put("/intership/user", $scope.currentUser, config)
-            .then(function () {
-                $scope.goToList();
+    $scope.filter = function () {
+        if ($scope.filterUser.formattedCreatedDate) {
+            $scope.filterUser.createdDate = $scope.filterUser.formattedCreatedDate;
+        } else {
+            delete $scope.filterUser.createdDate;
+        }
+        if ($scope.filterUser.isAdminOption) {
+            $scope.filterUser.isAdmin = $scope.filterUser.isAdminOption.id;
+        }
+
+        $http.get("/intership/user", {params: $scope.filterUser})
+            .then(function (response) {
+                $scope.users = response.data;
             });
     };
     $scope.showRequiredError = function (form, field) {
         return (form.$submitted || field.$dirty) && field.$error.required;
     };
-
     $scope.goToList();
 });
 app.config(['$qProvider', function ($qProvider) {

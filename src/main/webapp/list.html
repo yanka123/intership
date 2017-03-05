@@ -1,11 +1,30 @@
 <div>
+    <h2>Filter</h2>
+    <form name="filterForm" ng-submit="filter()">
+        <label>Name</label>
+        <input name="name" ng-model="filterUser.name"/>
+        <br/>
+        <label>Age</label>
+        <input type="number" name="age" ng-model="filterUser.age"/>
+        <br/>
+        <label>Is admin</label>
+        <select name="isAdmin" ng-model="filterUser.isAdminOption" ng-options="o.name for o in isAdminOptions">
+            <option value="">Select</option>
+        </select>
+        <br/>
+        <label>Created after</label>
+        <input name="createdDate" ng-model="filterUser.formattedCreatedDate"/>
+        <br/>
+        <button type="submit">Filter</button>
+    </form>
+    <h2>Users list</h2>
     <table class="user-table table-align-center">
         <colgroup>
             <col style="background-color: lightgray">
             <col />
             <col />
             <col />
-            </colgroup>
+        </colgroup>
         <tr>
             <th>ID</th>
             <th>NAME</th>
