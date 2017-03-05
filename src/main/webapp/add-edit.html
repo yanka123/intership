@@ -1,0 +1,23 @@
+<div>
+    <form name="addEditForm" ng-submit="addEditForm.$valid && addEdit()" novalidate>
+        <label>Name</label>
+        <input name="name" ng-model="currentUser.name" required/>
+        <span class="error" ng-show="showRequiredError(addEditForm, addEditForm.name)">Name is required</span>
+        <br/>
+        <label>Age</label>
+        <input type="number" name="age" ng-model="currentUser.age" required/>
+        <span class="error" ng-show="showRequiredError(addEditForm, addEditForm.age)">Age is required</span>
+        <br/>
+        <label>Is admin</label>
+        <select name="isAdmin" ng-model="currentUser.isAdminOption" ng-options="o.name for o in isAdminOptions" required>
+            <option value="">Select</option>
+        </select>
+        <span class="error" ng-show="showRequiredError(addEditForm, addEditForm.isAdmin)">Is admin is required</span>
+        <br/>
+        <label>Created date</label>
+        <input name="createdDate" ng-model="currentUser.formattedCreatedDate" required />
+        <span class="error" ng-show="showRequiredError(addEditForm, addEditForm.createdDate)">Created date is required</span>
+        <br/>
+        <button type="submit">Save</button>
+    </form>
+</div>

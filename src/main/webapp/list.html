@@ -1,0 +1,37 @@
+<div>
+    <table class="user-table table-align-center">
+        <colgroup>
+            <col style="background-color: lightgray">
+            <col />
+            <col />
+            <col />
+            </colgroup>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>AGE</th>
+            <th>IS ADMIN</th>
+            <th>CREATED DATE</th>
+            <th>ACTIONS</th>
+        </tr>
+        <tr ng-repeat="user in users.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage)">
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.age}}</td>
+            <td>{{booleanToLabel(user.isAdmin)}}</td>
+            <td>{{user.createdDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>
+                <button ng-click="goToEdit(user)">Edit</button>
+                <button ng-click="delete(user.id)">Delete</button>
+            </td>
+        </tr>
+    </table>
+    <pagination
+            ng-model="currentPage"
+            total-items="users.length"
+            items-per-page="itemsPerPage"
+            boundary-links="true"
+            class="pagination-sm"
+            ng-change="pageChanged()">
+    </pagination>
+</div>

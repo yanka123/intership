@@ -1,0 +1,20 @@
+<html>
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="app.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    <script type="text/javascript" src="app.js"> </script>
+</head>
+<body>
+<div ng-app="intershipApp" ng-controller="userController" class="align-center">
+    <h1>Intership - Yanka</h1>
+    <p>
+        <button ng-click="goToList()">List</button>
+        <button ng-click="goToAdd()">Add</button>
+    </p>
+    <p ng-view></p>
+</div>
+</body>
+</html>
